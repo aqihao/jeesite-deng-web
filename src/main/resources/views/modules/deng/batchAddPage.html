@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>批量添加</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <h2>${tbTeacher}</h2>
+    <form role="form" action="${ctx}/deng/tbTeacher/batchAdd">
+        <div style="border-bottom: 1px solid #000;">
+            <h3>学生1</h3>
+            <div class="form-group">
+                <label for="name">姓名</label>
+                <input type="text" class="form-control" id="name" name="students[0].name" placeholder="请输入名称">
+            </div>
+            <div class="form-group">
+                <label for="name1">年龄</label>
+                <input type="text" class="form-control" id="name1" name="students[0].age" placeholder="请输入名称">
+            </div>
+            <div class="form-group">
+                <label for="name2">性别</label>
+                <input type="text" class="form-control" id="name2" name="students[0].sex" placeholder="请输入名称">
+            </div>
+        </div>
+        <br/>
+        <div style="border-bottom: 1px solid #000;">
+            <h3>学生2</h3>
+            <div class="form-group">
+                <label for="name">姓名</label>
+                <input type="text" class="form-control" id="name3" name="students[1].name" placeholder="请输入名称">
+            </div>
+            <div class="form-group">
+                <label for="name1">年龄</label>
+                <input type="text" class="form-control" id="name4" name="students[1].age" placeholder="请输入名称">
+            </div>
+            <div class="form-group">
+                <label for="name2">性别</label>
+                <input type="text" class="form-control" id="name5" name="students[1].sex" placeholder="请输入名称">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-default">提交</button>
+    </form>
+</body>
+</html>

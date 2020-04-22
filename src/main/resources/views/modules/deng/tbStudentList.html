@@ -1,0 +1,96 @@
+<% layout('/layouts/default.html', {title: 'tb_student管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('tb_student管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="${ctx}/deng/tbStudent/bar" class="btn btn-default btnTool" title="${text('进度条')}"><i class="fa fa-filter"></i> ${text('进度条')}</a>
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('deng:tbStudent:edit')){ %>
+					<a href="${ctx}/deng/tbStudent/form" class="btn btn-default btnTool" title="${text('新增tb_student')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+				<% if(hasPermi('deng:tbStudent:edit')){ %>
+					<a href="${ctx}/deng/tbStudent/poi" class="btn btn-default" title="${text('导出tb_student')}" target="_parent"><i class="fa fa-plus"></i> ${text('导出')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div>
+
+			<a href="#" onclick="getCookie2(n)">click</a>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${tbStudent}" action="${ctx}/deng/tbStudent/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('学号')}：</label>
+					<div class="control-inline">
+						<#form:input path="sno" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('姓名')}：</label>
+					<div class="control-inline">
+						<#form:input path="name" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('性别')}：</label>
+					<div class="control-inline">
+						<#form:input path="sex" maxlength="1" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('年龄')}：</label>
+					<div class="control-inline">
+						<#form:input path="age" maxlength="3" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+	//cookie
+	$(function(){
+		alert(111);
+		var cookie = $.cookie('the_cookie');
+		alert(cookie);
+	})
+
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("学号")}', name:'sno', index:'a.sno', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/deng/tbStudent/form?sno='+row.sno+'" class="btnList" data-title="${text("编辑tb_student")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("姓名")}', name:'name', index:'a.name', width:150, align:"left"},
+		{header:'${text("性别")}', name:'sex', index:'a.sex', width:150, align:"left"},
+		{header:'${text("年龄")}', name:'age', index:'a.age', width:150, align:"center"},
+		{header:'${text("操作")}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('deng:tbStudent:edit')){ %>
+				actions.push('<a href="${ctx}/deng/tbStudent/details?sno='+row.sno+'" class="btnList" title="${text("详情tb_student")}">详情</a>&nbsp;');
+				actions.push('<a href="${ctx}/deng/tbStudent/jsonList" class="btnList" title="${text("详情tb_student")}">列表Json</a>&nbsp;');
+				actions.push('<a href="${ctx}/deng/tbStudent/form?sno='+row.sno+'" class="btnList" title="${text("编辑tb_student")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/deng/tbStudent/delete?sno='+row.sno+'" class="btnList" title="${text("删除tb_student")}" data-confirm="${text("确认要删除该tb_student吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+
+</script>

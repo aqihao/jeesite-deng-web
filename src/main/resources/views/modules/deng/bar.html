@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动画的进度条</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div>
+    <h2>${bar}</h2>
+    <a href="${ctx}/deng/tbStudent/bars" id ="cs">click</a>
+</div>
+<div class="progress progress-striped active">
+    <div class="progress-bar progress-bar-success" role="progressbar"
+         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+         style="width: 30%;">
+        <span class="sr-only">30% 完成</span>
+    </div>
+</div>
+</body>
+<script>
+    $(function(){
+        alert(111);
+        $('#cs').click();
+    })
+</script>
+</html>
