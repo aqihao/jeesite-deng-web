@@ -20,7 +20,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Zhong zhong = new Zhong();
+//        Zhong zhong = new Zhong();
 
         JFrame jf = new JFrame("测试窗口");
         jf.setSize(250, 250);
