@@ -3,9 +3,15 @@
  */
 package com.jeesite.modules.deng.web;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import com.jeesite.modules.deng.vo.SchoolVO;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +27,11 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.deng.entity.School;
 import com.jeesite.modules.deng.service.SchoolService;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 
 /**
  * 学校管理表Controller
@@ -97,6 +108,74 @@ public class SchoolController extends BaseController {
 	public String delete(School school) {
 		schoolService.delete(school);
 		return renderResult(Global.TRUE, text("删除学校管理,新增＂XX＂成功!成功！"));
+	}
+
+
+	/**
+	 * 导出列表数据
+	 */
+	@RequiresPermissions("deng:school:view")
+	@RequestMapping(value = "export")
+	@ResponseBody
+	public void export(School school, HttpServletRequest request, HttpServletResponse response) {
+		school.setPage(new Page<>(request, response));
+		school.setSchoolCode("");
+		Page<School> page = schoolService.findPage(school);
+
+		ArrayList<SchoolVO> list = new ArrayList<>();
+		SchoolVO vo = new SchoolVO();
+		SchoolVO vo1 = new SchoolVO();
+		vo.setSchedName("祁阳一中");
+		vo.setsType("1");
+		vo.setTriggerGroup("祁阳湘江河");
+		vo.setTriggerName("黄天荡");
+		vo.setDate("2020-05-01 10:52:56");
+		vo1.setSchedName("祁阳二中");
+		vo1.setsType("2");
+		vo1.setTriggerGroup("祁阳莲子塘");
+		vo1.setTriggerName("刘小中");
+		vo1.setDate("2020-05-02 12:50:56");
+		list.add(vo);
+		list.add(vo1);
+
+		/*try {
+			//导出
+//			Workbook workbook = ExcelExportUtil.exportBigExcel(new ExportParams("计算机一班学生", "学生"), School.class, page.getList());
+			Workbook workbook = ExcelExportUtil.exportBigExcel(new ExportParams("计算机一班学生", "学生"), SchoolVO.class, list);
+			response.reset();
+			response.setContentType("application/octet-stream");
+			ServletOutputStream outputStream = response.getOutputStream();
+			workbook.write(outputStream);
+			outputStream.flush();
+			outputStream.close();
+		}catch (Exception e){
+			e.printStackTrace();
+		}*/
+
+		try{
+
+			// 生成workbook 并导出
+//			Workbook workbook = ExcelExportUtil.exportExcel(exportParams, School.class, page.getList());
+			Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("学生名字",  "测试"), SchoolVO.class, list);
+            /*File savefile = new File("C:/Users/JustryDeng/Desktop/");
+            if (!savefile.exists()) {
+                boolean result = savefile.mkdirs();
+                System.out.println("目录不存在，创建" + result);
+            }
+            FileOutputStream fos = new FileOutputStream("C:/Users/JustryDeng/Desktop/student.xls");
+            workbook.write(fos);
+            fos.close();*/
+			String fileName = "日数据表" + ".xls";
+			response.reset();
+			response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+			response.setContentType("application/octet-stream");
+			ServletOutputStream outputStream = response.getOutputStream();
+			workbook.write(outputStream);
+			outputStream.flush();
+			outputStream.close();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 }

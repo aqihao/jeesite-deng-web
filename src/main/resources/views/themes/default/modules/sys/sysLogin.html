@@ -49,12 +49,13 @@
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary btn-block btn-flat"
 					id="btnSubmit" data-loading="${text('登录验证成功，正在进入...')}"
-					data-login-valid="${text('正在验证登录，请稍后...')}">${text('立即登录111')}</button>
+					data-login-valid="${text('正在验证登录，请稍后...')}">${text('立即登录')}</button>
 			</div>
 		</#form:form>
 		<div class="row">
 			<div class="col-xs-12">
 				<a href="${ctxPath}/account/forgetPwd" class="pull-left">[ ${text('忘记密码')} ]</a>
+				<a href="${ctxPath}/account/registerUser" class="pull-left ml10">[ ${text('注册账号')} ]</a>
 				<% if(@Global.getConfigToBoolean('user.registerUser', 'false')){ %>
 					<a href="${ctxPath}/account/registerUser" class="pull-left ml10">[ ${text('注册账号')} ]</a>
 				<% } %>
@@ -76,8 +77,9 @@
 		</div>
 	</div>
 	<div class="login-copyright">
-		&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By <a
-			href="http://jeesite.com">JeeSite ${@Global.getProperty('jeesiteVersion')}</a>
+		&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By
+		<!--<a href="http://jeesite.com">JeeSite ${@Global.getProperty('jeesiteVersion')}</a>-->
+		<a href="https://www.cnblogs.com/aqihao/">deng</a>
 	</div>
 </div>
 <% } %>

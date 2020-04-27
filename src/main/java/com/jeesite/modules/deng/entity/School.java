@@ -4,10 +4,10 @@
 package com.jeesite.modules.deng.entity;
 
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
-import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.modules.utils.IDUtils;
 
 import java.util.Date;
@@ -29,10 +29,13 @@ public class School extends DataEntity<School> {
 	
 	private static final long serialVersionUID = 1L;
 	private String schoolCode;
-	private String schedName;		// 名称
-	private String triggerName;		// 校长名
-	private String triggerGroup;		// 地址
-	private String sType;		// 类型
+	@Excel(name="学校名称",orderNum="2",width=30,isStatistics=true,suffix="%",replace = { "男_1", "女_2" })
+	private String schedName;
+	@Excel(name="校长名",orderNum="0")
+	private String triggerName;
+	@Excel(name="学校地址",orderNum="1",width=30)
+	private String triggerGroup;
+	private String sType;
 	
 	public School() {
 		this.schoolCode = IDUtils.getUUID32();//todo 此处有问题,会导致查询分页时查不到数据,应放到插入数据时生成,延后处理
