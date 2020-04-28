@@ -32,6 +32,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 学校管理表Controller
@@ -75,6 +77,10 @@ public class SchoolController extends BaseController {
 		school.setPage(new Page<>(request, response));
 		school.setSchoolCode("");
 		Page<School> page = schoolService.findPage(school);
+		List<School> list = page.getList();
+		for (School school1 : list) {
+			Date date = school1.getCreateDate();
+		}
 		return page;
 	}
 
